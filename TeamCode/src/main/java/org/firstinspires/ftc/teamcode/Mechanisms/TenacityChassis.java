@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
 import org.firstinspires.ftc.robotcontroller.Hardware.Motor;
+import org.firstinspires.ftc.robotcontroller.Math.Vectors.Vector2D;
 import org.firstinspires.ftc.robotcontroller.Math.Vectors.Vector3D;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
@@ -17,6 +18,7 @@ public class TenacityChassis {
     Gamepad gamepad1;
 
     Vector3D controllerInput = new Vector3D(0,0,0);
+
 
     public double fLeft;
     public double fRight;
@@ -58,6 +60,27 @@ public class TenacityChassis {
     public void ManualDrive(){
         controllerInput.set(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
         setDriveVectorsRobotCentric(controllerInput);
+    }
+
+    public void SkidSteerDrive(){
+        skidSteer(new Vector2D(gamepad1.left_stick_y, gamepad1.right_stick_y));
+    }
+    public void skidSteer(Vector2D input){
+        fLeft = input.B;
+        bLeft = input.B;
+
+        fRight = input.A;
+        bRight = input.A;
+
+        max = Math.max(Math.max(Math.abs(fLeft), Math.abs(fRight)), Math.max(Math.abs(bLeft), Math.abs(bRight)));
+        if (max > 1.0) {
+            fLeft /= max;
+            fRight /= max;
+            bLeft /= max;
+            bRight /= max;
+        }
+
+        setPower(fLeft, fRight, bRight, bLeft);
     }
 
     public void setDriveVectorsRobotCentric(Vector3D input){

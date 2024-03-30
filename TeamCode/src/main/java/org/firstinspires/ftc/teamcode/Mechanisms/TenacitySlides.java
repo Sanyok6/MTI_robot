@@ -27,12 +27,15 @@ public class TenacitySlides extends Slides {
     double slidesPower = 0;
 
     public enum SlidesState{
-        HOME,
+        INIT,
+        FAR_INTAKE,
+        CLOSE_INTAKE,
         FIRST_LINE,
         SECOND_LINE,
         THIRD_LINE,
         HANG,
-        MANUAL
+        MANUAL,
+        TUNING
     }
 
     public SlidesState slidesState;
@@ -68,7 +71,7 @@ public class TenacitySlides extends Slides {
         this.telemetry = telemetry;
 
         // The starting state of the slides is to be in manual control
-        slidesState = SlidesState.HOME;
+        slidesState = SlidesState.INIT;
     }
 
     @Override
@@ -83,29 +86,36 @@ public class TenacitySlides extends Slides {
         slidesPID.tolerance = 0.001;
 
         switch (slidesState){
-            case HOME:
-                targetPos = position;
+            case INIT:
+                targetPos = 1;
+                slidesPower = slidesPID.PID_Power(getExtension(), targetPos);
+                break;
+            case FAR_INTAKE:
+                targetPos = 5.7;
                 slidesPower = slidesPID.PID_Power(getExtension(), targetPos);
                 break;
 
             case FIRST_LINE:
-                targetPos = 4;
+                targetPos = 1;
                 slidesPower = slidesPID.PID_Power(getExtension(), targetPos);
                 break;
 
             case SECOND_LINE:
-                targetPos = 4;
+                targetPos = 1;
                 slidesPower = slidesPID.PID_Power(getExtension(), targetPos);
                 break;
 
             case THIRD_LINE:
-                targetPos = 4;
+                targetPos = 1;
                 slidesPower = slidesPID.PID_Power(getExtension(), targetPos);
                 break;
 
             case MANUAL:
                 slidesPower = gamepad1.right_trigger - gamepad1.left_trigger;
                 break;
+            case TUNING:
+                targetPos = position;
+                slidesPower = slidesPID.PID_Power(getExtension(), targetPos);
         }
         // Sets the power to the slides motors
         setPower(slidesPower);

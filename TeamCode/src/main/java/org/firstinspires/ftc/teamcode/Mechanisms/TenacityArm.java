@@ -29,6 +29,7 @@ public class TenacityArm extends MotorArm {
         INIT,
         CLOSE_INTAKE,
         FAR_INTAKE,
+        DRIVING,
         FIRST_LINE,
         SECOND_LINE,
         THIRD_LINE,
@@ -71,6 +72,9 @@ public class TenacityArm extends MotorArm {
                 break;
             case CLOSE_INTAKE:
                 targetAngle = ANGLE;
+                break;
+            case DRIVING:
+                targetAngle = 0;
                 break;
             case FAR_INTAKE:
                 targetAngle = -12;
