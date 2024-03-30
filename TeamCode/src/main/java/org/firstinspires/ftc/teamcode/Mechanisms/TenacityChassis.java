@@ -37,10 +37,10 @@ public class TenacityChassis {
         backRight = new Motor("bRight", hardwareMap);
         backLeft = new Motor("bLeft", hardwareMap);
 
-        frontRight.setDirectionReverse();
-        backRight.setDirectionReverse();
-        frontLeft.setDirectionForward();
-        backLeft.setDirectionForward();
+        frontRight.setDirectionForward();
+        backRight.setDirectionForward();
+        frontLeft.setDirectionReverse();
+        backLeft.setDirectionReverse();
 
         motors = Arrays.asList(frontLeft, frontRight, backRight, backLeft);
 

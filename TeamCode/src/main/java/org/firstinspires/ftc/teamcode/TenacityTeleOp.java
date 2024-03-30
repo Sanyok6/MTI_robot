@@ -39,8 +39,7 @@ public class TenacityTeleOp extends LinearOpMode {
         arm = new TenacityArm(slides, gamepad1, telemetry, hardwareMap);
         doubleClaw = new TenacityClaw(gamepad1, telemetry, hardwareMap);
         wrist = new TenacityWrist(gamepad1, telemetry, hardwareMap);
-
-//        chassis.ManualDrive();
+        chassis = new TenacityChassis(gamepad1, hardwareMap);
 
         slides.arm = arm;
         arm.slides = slides;
@@ -158,6 +157,8 @@ public class TenacityTeleOp extends LinearOpMode {
             lastToggleUp = gamepad1.dpad_up;
             lastToggleDown = gamepad1.dpad_down;
             lastToggleB = gamepad1.b;
+
+            arm.TuningTelemetry();
 
             telemetry.update();
         }
