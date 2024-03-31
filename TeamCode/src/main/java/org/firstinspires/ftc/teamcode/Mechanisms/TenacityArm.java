@@ -26,6 +26,7 @@ public class TenacityArm extends MotorArm {
         CLOSE_INTAKE,
         FAR_INTAKE,
         AUTON_INTAKE,
+        AUTON_AFTER_INTAKE,
         DRIVING,
         FIRST_LINE,
         SECOND_LINE,
@@ -38,6 +39,7 @@ public class TenacityArm extends MotorArm {
     public static double CLOSE_INTAKE_ANGLE = -12;
     public static double FAR_INTAKE_ANGLE = -11;
     public static double AUTON_INTAKE_ANGLE = -14;
+    public static double AUTON_AFTER_INTAKE_ANGLE = 10;
     public static double INIT_ANGLE = 30;
     public static double K_GRAVITY = 0.022;
     public static double DRIVING_ANGLE = -5;
@@ -77,6 +79,9 @@ public class TenacityArm extends MotorArm {
                 break;
             case AUTON_INTAKE:
                 targetAngle = AUTON_INTAKE_ANGLE;
+                break;
+            case AUTON_AFTER_INTAKE:
+                targetAngle = AUTON_AFTER_INTAKE_ANGLE;
                 break;
             case FIRST_LINE:
                 targetAngle = 152;
