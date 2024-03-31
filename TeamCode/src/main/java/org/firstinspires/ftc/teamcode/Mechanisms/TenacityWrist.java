@@ -15,6 +15,7 @@ public class TenacityWrist extends ArmWrist {
     public enum WristPosition {
         INIT,
         INTAKE_POSITION,
+        AUTON_INTAKE,
         OUTTAKE_FIRST_LINE,
         OUTTAKE_SECOND_LINE,
         OUTTAKE_THIRD_LINE,
@@ -22,6 +23,7 @@ public class TenacityWrist extends ArmWrist {
     }
 
     public static double WRIST_INTAKE = 0.52;
+    public static double WRIST_AUTON_INTAKE = 0.55;
     public static double WRIST_OUTTAKE_1 = 0.45;
     public static double WRIST_OUTTAKE_2 = 0.5;
     public static double WRIST_OUTTAKE_3 = 0.5;
@@ -29,20 +31,22 @@ public class TenacityWrist extends ArmWrist {
     public static double WRIST_DRIVING = 0.05;
     public static double WRIST_HANG = 0.4;
 
-    public WristPosition wristPosition;
+    public WristPosition wristPosition = WristPosition.INIT;
 
     public TenacityWrist(Gamepad gamepad1, Telemetry telemetry, HardwareMap hardwareMap) {
         super("wrist", hardwareMap);
 
         this.gamepad1 = gamepad1;
         this.telemetry = telemetry;
-        wristPosition = WristPosition.INIT;
     }
 
     public void setWristPosition() {
         switch (wristPosition) {
             case INTAKE_POSITION:
                 wristServo.setPosition(WRIST_INTAKE);
+                break;
+            case AUTON_INTAKE:
+                wristServo.setPosition(WRIST_AUTON_INTAKE);
                 break;
             case INIT:
                 wristServo.setPosition(WRIST_INIT);
