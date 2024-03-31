@@ -9,10 +9,10 @@ import org.firstinspires.ftc.robotcontroller.Hardware.Intakes.ServoClaw;
 
 @Config
 public class TenacityClaw {
-    public static double CLAW_LEFT_OPEN = 0.4;
-    public static double CLAW_RIGHT_OPEN = 0.45;
-    public static double CLAW_LEFT_CLOSED = 0.9;
-    public static double CLAW_RIGHT_CLOSED = 0;
+    public static Double CLAW_LEFT_OPEN = 0.4;
+    public static Double CLAW_RIGHT_OPEN = 0.45;
+    public static Double CLAW_LEFT_CLOSED = 0.9;
+    public static Double CLAW_RIGHT_CLOSED = 0.0;
 
     private final ServoClaw clawLeft, clawRight;
     private final Gamepad gamepad;

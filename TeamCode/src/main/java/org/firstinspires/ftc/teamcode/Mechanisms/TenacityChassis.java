@@ -60,27 +60,6 @@ public class TenacityChassis {
         setDriveVectorsRobotCentric(controllerInput);
     }
 
-    public void SkidSteerDrive(){
-        skidSteer(new Vector2D(gamepad1.left_stick_y, gamepad1.right_stick_y));
-    }
-    public void skidSteer(Vector2D input){
-        fLeft = input.B;
-        bLeft = input.B;
-
-        fRight = input.A;
-        bRight = input.A;
-
-        max = Math.max(Math.max(Math.abs(fLeft), Math.abs(fRight)), Math.max(Math.abs(bLeft), Math.abs(bRight)));
-        if (max > 1.0) {
-            fLeft /= max;
-            fRight /= max;
-            bLeft /= max;
-            bRight /= max;
-        }
-
-        setPower(fLeft, fRight, bRight, bLeft);
-    }
-
     public void setDriveVectorsRobotCentric(Vector3D input){
         fLeft = input.A -   input.B +   input.C;
         fRight = input.A +   input.B -   input.C;
@@ -98,18 +77,10 @@ public class TenacityChassis {
         setPower(fLeft, fRight, bRight, bLeft);
     }
 
-
-    public void setPower(double power){
-        this.frontLeft.setPower(power);
-        this.frontRight.setPower(power);
-        this.backRight.setPower(power);
-        this.backLeft.setPower(power);
-    }
-
     public void setPower(double fLeft, double fRight, double bRight, double bLeft){
-        this.frontLeft.setPower(fLeft);
-        this.frontRight.setPower(fRight);
-        this.backRight.setPower(bRight);
-        this.backLeft.setPower(bLeft);
+        frontLeft.setPower(fLeft);
+        frontRight.setPower(fRight);
+        backRight.setPower(bRight);
+        backLeft.setPower(bLeft);
     }
 }

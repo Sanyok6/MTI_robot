@@ -82,9 +82,6 @@ public class TenacityTeleOp extends LinearOpMode {
             if (runtime.seconds() > 3)
                 arm.setArmPower();
 
-            if (gamepad1.touchpad)
-                slides.resetEncoders();
-
             telemetry.addLine("Waiting For Start");
             telemetry.update();
         }

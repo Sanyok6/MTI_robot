@@ -47,6 +47,7 @@ public class TenacityArm extends MotorArm {
     public static double FAR_INTAKE_ANGLE = -11;
     public static double INIT_ANGLE = 30;
     public static double K_GRAVITY = 0.022;
+    public static double DRIVING_ANGLE = -5;
 
     public Slides slides;
     public TenacityArm(Slides slides, Gamepad gamepad1, Telemetry telemetry, HardwareMap hardwareMap) {
@@ -76,7 +77,7 @@ public class TenacityArm extends MotorArm {
                 targetAngle = CLOSE_INTAKE_ANGLE;
                 break;
             case DRIVING:
-                targetAngle = 0;
+                targetAngle = DRIVING_ANGLE;
                 break;
             case FAR_INTAKE:
                 targetAngle = FAR_INTAKE_ANGLE;
