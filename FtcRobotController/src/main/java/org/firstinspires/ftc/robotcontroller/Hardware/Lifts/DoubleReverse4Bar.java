@@ -25,8 +25,8 @@ public abstract class DoubleReverse4Bar {
 
         reset();
 
-        leftBarMotor.setBreakMode();
-        rightBarMotor.setBreakMode();
+        leftBarMotor.setBrakeMode();
+        rightBarMotor.setBrakeMode();
     }
 
     public DoubleReverse4Bar(String leftBarMotorName, String rightBarMotorName, double CPR, HardwareMap hardwareMap){
@@ -35,8 +35,8 @@ public abstract class DoubleReverse4Bar {
 
         reset();
 
-        leftBarMotor.setBreakMode();
-        rightBarMotor.setBreakMode();
+        leftBarMotor.setBrakeMode();
+        rightBarMotor.setBrakeMode();
     }
 
     public DoubleReverse4Bar(String leftBarMotorName, String rightBarMotorName, double CPR, double kGravity, HardwareMap hardwareMap){
@@ -45,8 +45,8 @@ public abstract class DoubleReverse4Bar {
 
         reset();
 
-        leftBarMotor.setBreakMode();
-        rightBarMotor.setBreakMode();
+        leftBarMotor.setBrakeMode();
+        rightBarMotor.setBrakeMode();
 
         this.kGravity = kGravity;
     }
@@ -57,8 +57,8 @@ public abstract class DoubleReverse4Bar {
 
         reset();
 
-        leftBarMotor.setBreakMode();
-        rightBarMotor.setBreakMode();
+        leftBarMotor.setBrakeMode();
+        rightBarMotor.setBrakeMode();
 
         this.gearRatio = gearRatio;
         this.kGravity = kGravity;
@@ -71,8 +71,8 @@ public abstract class DoubleReverse4Bar {
 
         reset();
 
-        leftBarMotor.setBreakMode();
-        rightBarMotor.setBreakMode();
+        leftBarMotor.setBrakeMode();
+        rightBarMotor.setBrakeMode();
 
         leftBarMotor.setDirectionReverse();
         rightBarMotor.setDirectionForward();

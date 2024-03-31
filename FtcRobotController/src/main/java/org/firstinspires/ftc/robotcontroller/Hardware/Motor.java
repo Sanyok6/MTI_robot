@@ -73,7 +73,7 @@ public class Motor {
     public void setZeroPowerBehavior(DcMotor.ZeroPowerBehavior zeroPowerBehavior){
         dcMotorEx.setZeroPowerBehavior(zeroPowerBehavior);
     }
-    public void setBreakMode(){
+    public void setBrakeMode(){
         dcMotorEx.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
     public void setFloatMode(){

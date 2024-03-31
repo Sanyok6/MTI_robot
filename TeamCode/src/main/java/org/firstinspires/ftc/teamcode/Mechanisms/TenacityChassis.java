@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.Mechanisms;
 
-import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -9,7 +8,6 @@ import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigu
 import org.firstinspires.ftc.robotcontroller.Hardware.Motor;
 import org.firstinspires.ftc.robotcontroller.Math.Vectors.Vector2D;
 import org.firstinspires.ftc.robotcontroller.Math.Vectors.Vector3D;
-import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 import java.util.Arrays;
 import java.util.List;
@@ -47,7 +45,7 @@ public class TenacityChassis {
         motors = Arrays.asList(frontLeft, frontRight, backRight, backLeft);
 
         for (Motor motor : motors) {
-            motor.setBreakMode();
+            motor.setBrakeMode();
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             MotorConfigurationType motorConfigurationType = motor.getMotorType().clone();
             motorConfigurationType.setAchieveableMaxRPMFraction(1.0);

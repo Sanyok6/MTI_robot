@@ -12,17 +12,17 @@ import org.firstinspires.ftc.teamcode.Mechanisms.TenacityWrist;
 
 @TeleOp
 public class TenacityTeleOp extends LinearOpMode {
-
     // TODO: add a slides manual control state
     // TODO: add a Close scoring state
-    TenacitySlides slides;
-    TenacityArm arm;
-    TenacityClaw doubleClaw;
-    TenacityWrist wrist;
-    TenacityChassis chassis;
+    private TenacitySlides slides;
+    private TenacityArm arm;
+    private TenacityClaw doubleClaw;
+    private TenacityWrist wrist;
+    private TenacityChassis chassis;
 
-    ElapsedTime runtime = new ElapsedTime();
-    public enum TeleOpState{
+    private ElapsedTime runtime = new ElapsedTime();
+
+    private enum TeleOpState {
         INTAKE,
         DRIVING_ONE,
         DRIVING_TWO,
@@ -33,19 +33,21 @@ public class TenacityTeleOp extends LinearOpMode {
         MANUAL
     }
 
-    enum IntakeStates{
+    private enum IntakeStates {
         CLOSE,
         FAR
     }
-    IntakeStates intakeStates;
-    TeleOpState teleOpState;
-    TeleOpState scoringState;
 
-    boolean lastToggleX = false;
-    boolean lastToggleUp = false;
-    boolean lastToggleDown = false;
-    boolean lastToggleB = false;
-    boolean lastToggleA = false;
+    private IntakeStates intakeStates;
+    private TeleOpState teleOpState;
+    private TeleOpState scoringState;
+
+    private boolean lastToggleX = false;
+    private boolean lastToggleUp = false;
+    private boolean lastToggleDown = false;
+    private boolean lastToggleB = false;
+    private boolean lastToggleA = false;
+
     @Override
     public void runOpMode() throws InterruptedException {
         slides = new TenacitySlides(arm, gamepad1, telemetry, hardwareMap);
@@ -64,19 +66,21 @@ public class TenacityTeleOp extends LinearOpMode {
 
         runtime.reset();
 
-        while (opModeInInit()){
+        while (opModeInInit()) {
             slides.setSlidePower();
             wrist.setWristPosition();
 
-            if (runtime.seconds() > 3){
+            if (runtime.seconds() > 3)
                 arm.setArmPower();
-            }
+
+            if (gamepad1.start)
+                slides.resetEncoders();
 
             telemetry.addLine("Waiting For Start");
             telemetry.update();
         }
 
-        while (opModeIsActive()){
+        while (opModeIsActive()) {
             chassis.ManualDrive();
 
             arm.setArmPower();
@@ -85,28 +89,29 @@ public class TenacityTeleOp extends LinearOpMode {
             doubleClaw.updateClaw();
 
             wrist.setWristPosition();
-            switch (teleOpState){
+
+            switch (teleOpState) {
                 case INTAKE:
                     arm.armState = TenacityArm.ArmState.CLOSE_INTAKE;
                     wrist.wristPosition = TenacityWrist.WristPosition.INTAKE_POSITION;
 
-                    switch (intakeStates){
+                    switch (intakeStates) {
                         case FAR:
                             slides.slidesState = TenacitySlides.SlidesState.FAR_INTAKE;
-                            if ((gamepad1.a != lastToggleA) && gamepad1.a){
+                            if ((gamepad1.a != lastToggleA) && gamepad1.a) {
                                 intakeStates = IntakeStates.CLOSE;
                             }
 
                             break;
                         case CLOSE:
                             slides.slidesState = TenacitySlides.SlidesState.INIT;
-                            if ((gamepad1.a != lastToggleA) && gamepad1.a){
+                            if ((gamepad1.a != lastToggleA) && gamepad1.a) {
                                 intakeStates = IntakeStates.FAR;
                             }
                             break;
                     }
 
-                    if ((gamepad1.x != lastToggleX) && gamepad1.x){
+                    if ((gamepad1.x != lastToggleX) && gamepad1.x) {
                         teleOpState = scoringState;
                     }
 
@@ -114,7 +119,7 @@ public class TenacityTeleOp extends LinearOpMode {
 //                        teleOpState = TeleOpState.MANUAL;
 //                    }
 
-                    if ((gamepad1.b != lastToggleB) && gamepad1.b){
+                    if ((gamepad1.b != lastToggleB) && gamepad1.b) {
                         teleOpState = TeleOpState.DRIVING_ONE;
                     }
                     break;
@@ -123,11 +128,11 @@ public class TenacityTeleOp extends LinearOpMode {
                     slides.slidesState = TenacitySlides.SlidesState.INIT;
                     wrist.wristPosition = TenacityWrist.WristPosition.INIT;
 
-                    if ((gamepad1.x != lastToggleX) && gamepad1.x){
+                    if ((gamepad1.x != lastToggleX) && gamepad1.x) {
                         teleOpState = scoringState;
                     }
 
-                    if ((gamepad1.b != lastToggleB) && gamepad1.b){
+                    if ((gamepad1.b != lastToggleB) && gamepad1.b) {
                         teleOpState = TeleOpState.INTAKE;
                     }
 
@@ -140,11 +145,11 @@ public class TenacityTeleOp extends LinearOpMode {
                     slides.slidesState = TenacitySlides.SlidesState.INIT;
                     wrist.wristPosition = TenacityWrist.WristPosition.INIT;
 
-                    if ((gamepad1.x != lastToggleX) && gamepad1.x){
+                    if ((gamepad1.x != lastToggleX) && gamepad1.x) {
                         teleOpState = TeleOpState.INTAKE;
                     }
 
-                    if ((gamepad1.b != lastToggleB) && gamepad1.b){
+                    if ((gamepad1.b != lastToggleB) && gamepad1.b) {
                         teleOpState = scoringState;
                     }
 
@@ -157,12 +162,12 @@ public class TenacityTeleOp extends LinearOpMode {
                     slides.slidesState = TenacitySlides.SlidesState.FIRST_LINE;
                     wrist.wristPosition = TenacityWrist.WristPosition.OUTTAKE_FIRST_LINE;
 
-                    if ((gamepad1.x != lastToggleX) && gamepad1.x){
+                    if ((gamepad1.x != lastToggleX) && gamepad1.x) {
                         scoringState = teleOpState;
                         teleOpState = TeleOpState.INTAKE;
                     }
 
-                    if ((gamepad1.dpad_up != lastToggleUp) && gamepad1.dpad_up){
+                    if ((gamepad1.dpad_up != lastToggleUp) && gamepad1.dpad_up) {
                         teleOpState = TeleOpState.SECOND_LINE;
                     }
 
@@ -170,7 +175,7 @@ public class TenacityTeleOp extends LinearOpMode {
 //                        teleOpState = TeleOpState.MANUAL;
 //                    }
 
-                    if ((gamepad1.b != lastToggleB) && gamepad1.b){
+                    if ((gamepad1.b != lastToggleB) && gamepad1.b) {
                         teleOpState = TeleOpState.DRIVING_TWO;
                     }
                     break;
@@ -179,16 +184,16 @@ public class TenacityTeleOp extends LinearOpMode {
                     slides.slidesState = TenacitySlides.SlidesState.SECOND_LINE;
                     wrist.wristPosition = TenacityWrist.WristPosition.OUTTAKE_SECOND_LINE;
 
-                    if ((gamepad1.x != lastToggleX) && gamepad1.x){
+                    if ((gamepad1.x != lastToggleX) && gamepad1.x) {
                         scoringState = teleOpState;
                         teleOpState = TeleOpState.INTAKE;
                     }
 
-                    if ((gamepad1.dpad_up != lastToggleUp) && gamepad1.dpad_up){
+                    if ((gamepad1.dpad_up != lastToggleUp) && gamepad1.dpad_up) {
                         teleOpState = TeleOpState.THIRD_LINE;
                     }
 
-                    if ((gamepad1.dpad_down != lastToggleDown) && gamepad1.dpad_down){
+                    if ((gamepad1.dpad_down != lastToggleDown) && gamepad1.dpad_down) {
                         teleOpState = TeleOpState.FIRST_LINE;
                     }
 
@@ -196,7 +201,7 @@ public class TenacityTeleOp extends LinearOpMode {
 //                        teleOpState = TeleOpState.MANUAL;
 //                    }
 
-                    if ((gamepad1.b != lastToggleB) && gamepad1.b){
+                    if ((gamepad1.b != lastToggleB) && gamepad1.b) {
                         teleOpState = TeleOpState.DRIVING_TWO;
                     }
                     break;
@@ -205,12 +210,12 @@ public class TenacityTeleOp extends LinearOpMode {
                     slides.slidesState = TenacitySlides.SlidesState.THIRD_LINE;
                     wrist.wristPosition = TenacityWrist.WristPosition.OUTTAKE_THIRD_LINE;
 
-                    if ((gamepad1.x != lastToggleX) && gamepad1.x){
+                    if ((gamepad1.x != lastToggleX) && gamepad1.x) {
                         scoringState = teleOpState;
                         teleOpState = TeleOpState.INTAKE;
                     }
 
-                    if ((gamepad1.dpad_down != lastToggleDown) && gamepad1.dpad_down){
+                    if ((gamepad1.dpad_down != lastToggleDown) && gamepad1.dpad_down) {
                         teleOpState = TeleOpState.SECOND_LINE;
                     }
 
@@ -218,7 +223,7 @@ public class TenacityTeleOp extends LinearOpMode {
 //                        teleOpState = TeleOpState.MANUAL;
 //                    }
 
-                    if ((gamepad1.b != lastToggleB) && gamepad1.b){
+                    if ((gamepad1.b != lastToggleB) && gamepad1.b) {
                         teleOpState = TeleOpState.DRIVING_TWO;
                     }
                     break;
@@ -228,7 +233,7 @@ public class TenacityTeleOp extends LinearOpMode {
                 case MANUAL:
                     slides.slidesState = TenacitySlides.SlidesState.MANUAL;
 
-                    if ((gamepad1.x != lastToggleX) && gamepad1.x){
+                    if ((gamepad1.x != lastToggleX) && gamepad1.x) {
                         scoringState = teleOpState;
                         teleOpState = TeleOpState.INTAKE;
                     }
@@ -244,9 +249,8 @@ public class TenacityTeleOp extends LinearOpMode {
             lastToggleA = gamepad1.a;
 
             arm.TuningTelemetry();
-            telemetry.addData("Wrist Position",wrist.wristPosition);
 
-
+            telemetry.addData("Wrist Position", wrist.wristPosition);
             telemetry.update();
         }
     }

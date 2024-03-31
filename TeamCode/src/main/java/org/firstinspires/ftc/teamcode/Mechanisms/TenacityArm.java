@@ -44,6 +44,7 @@ public class TenacityArm extends MotorArm {
 
     public static PIDCoefficients ARM_PID_COEFFICIENTS = new PIDCoefficients(0.04, 0.0025, 0.003);
     public static double ANGLE = -11;
+    public static double INIT_ANGLE = 30;
     public static double K_GRAVITY = 0.022;
 
     public Slides slides;
@@ -68,7 +69,7 @@ public class TenacityArm extends MotorArm {
         ArmPower = ArmPID.PID_Power(getAngleDegrees(), targetAngle);
         switch (armState){
             case INIT:
-                targetAngle = 34;
+                targetAngle = INIT_ANGLE;
                 break;
             case CLOSE_INTAKE:
                 targetAngle = ANGLE;

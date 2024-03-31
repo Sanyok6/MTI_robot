@@ -29,7 +29,7 @@ public abstract class MotorArm {
         reset();
 
         for (Motor motor : motors) {
-            motor.setBreakMode();
+            motor.setBrakeMode();
         }
 
         // IMU Setup
