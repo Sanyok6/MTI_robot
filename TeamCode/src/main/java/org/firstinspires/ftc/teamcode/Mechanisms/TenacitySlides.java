@@ -27,13 +27,26 @@ public class TenacitySlides extends Slides {
         INIT,
         FAR_INTAKE,
         CLOSE_INTAKE,
+        FIRST_HALF,
         FIRST_LINE,
+        THIRD_HALF,
         SECOND_LINE,
+        FIFTH_HALF,
         THIRD_LINE,
         HANG_ALIGN,
         HANG_PULL,
         MANUAL
     }
+
+    public static double FIRST_HALF = 1;
+    public static double FIRST_LINE = 1.1;
+    public static double THIRD_HALF = 2.2;
+    public static double SECOND_LINE = 3.3;
+    public static double FIFTH_HALF = 4.4;
+    public static double THIRD_LINE = 5.5;
+
+
+
 
     public SlidesState slidesState = SlidesState.INIT;
     private PID_Controller slidesPID = new PID_Controller(SLIDE_PID_COEFFS, 0);
@@ -80,14 +93,23 @@ public class TenacitySlides extends Slides {
             case FAR_INTAKE:
                 targetPos = 6;
                 break;
+            case FIRST_HALF:
+                targetPos = FIRST_HALF;
+                break;
             case FIRST_LINE:
-                targetPos = 1;
+                targetPos = FIRST_LINE;
+                break;
+            case THIRD_HALF:
+                targetPos = THIRD_HALF;
                 break;
             case SECOND_LINE:
-                targetPos = 1;
+                targetPos = SECOND_LINE;
+                break;
+            case FIFTH_HALF:
+                targetPos = FIFTH_HALF;
                 break;
             case THIRD_LINE:
-                targetPos = 1;
+                targetPos = THIRD_LINE;
                 break;
             case HANG_ALIGN:
                 targetPos = 5;
