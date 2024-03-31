@@ -22,12 +22,12 @@ public class TenacityWrist extends ArmWrist {
 
     }
 
-    public static double wristPosIntake = 0.45;
-    public static double wristPosOuttake1 = 0.45;
+    public static double wristPosIntake = 0.52;
+    public static double wristPosOuttake1 = 0.4;
     public static double wristPosOuttake2 = 0.5;
     public static double wristPosOuttake3 = 0.5;
 
-    public static double wristPosInit = 0.95;
+    public static double wristPosInit = 0.9;
 
     public static double wristPosDriving = 0.05;
     public WristPosition wristPosition;

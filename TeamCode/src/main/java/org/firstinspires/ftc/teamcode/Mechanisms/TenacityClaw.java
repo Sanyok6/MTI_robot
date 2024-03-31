@@ -12,7 +12,7 @@ public class TenacityClaw {
     public ClawLeft clawLeft;
     public ClawRight clawRight;
 
-    enum ClawState {
+    public enum ClawState {
         OPEN,
         CLOSED,
         LEFT_OPEN,

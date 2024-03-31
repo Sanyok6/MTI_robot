@@ -91,7 +91,7 @@ public class TenacitySlides extends Slides {
                 slidesPower = slidesPID.PID_Power(getExtension(), targetPos);
                 break;
             case FAR_INTAKE:
-                targetPos = 5.7;
+                targetPos = 6;
                 slidesPower = slidesPID.PID_Power(getExtension(), targetPos);
                 break;
 
