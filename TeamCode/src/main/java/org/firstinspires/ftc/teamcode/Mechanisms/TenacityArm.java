@@ -37,7 +37,7 @@ public class TenacityArm extends MotorArm {
     public static PIDCoefficients ARM_PID_COEFFS = new PIDCoefficients(0.04, 0.0025, 0.003);
     public static double CLOSE_INTAKE_ANGLE = -12;
     public static double FAR_INTAKE_ANGLE = -11;
-    public static double AUTON_INTAKE_ANGLE = -12;
+    public static double AUTON_INTAKE_ANGLE = -14;
     public static double INIT_ANGLE = 30;
     public static double K_GRAVITY = 0.022;
     public static double DRIVING_ANGLE = -5;
