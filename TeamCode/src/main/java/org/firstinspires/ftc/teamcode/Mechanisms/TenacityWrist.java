@@ -23,7 +23,7 @@ public class TenacityWrist extends ArmWrist {
     }
 
     public static double WRIST_INTAKE = 0.52;
-    public static double WRIST_AUTON_INTAKE = 0.55;
+    public static double WRIST_AUTON_INTAKE = 0.565;
     public static double WRIST_OUTTAKE_1 = 0.45;
     public static double WRIST_OUTTAKE_2 = 0.5;
     public static double WRIST_OUTTAKE_3 = 0.5;
