@@ -17,18 +17,15 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 @Config
 public class TenacityArm extends MotorArm {
-    Gamepad gamepad1;
-    Telemetry telemetry;
-    static String[] names = {"leftArm", "rightArm"};
-
-    double ArmPower = 0;
-    double targetAngle;
-
+    private Gamepad gamepad1;
+    private Telemetry telemetry;
+    private final static String[] names = {"leftArm", "rightArm"};
 
     public enum ArmState {
         INIT,
         CLOSE_INTAKE,
         FAR_INTAKE,
+        AUTON_INTAKE,
         DRIVING,
         FIRST_LINE,
         SECOND_LINE,
@@ -37,29 +34,25 @@ public class TenacityArm extends MotorArm {
         MANUAL
     }
 
-    public PID_Controller ArmPID;
-
-    public ArmState armState;
-
-
-    public static PIDCoefficients ARM_PID_COEFFICIENTS = new PIDCoefficients(0.04, 0.0025, 0.003);
+    public static PIDCoefficients ARM_PID_COEFFS = new PIDCoefficients(0.04, 0.0025, 0.003);
     public static double CLOSE_INTAKE_ANGLE = -12;
     public static double FAR_INTAKE_ANGLE = -11;
+    public static double AUTON_INTAKE_ANGLE = 0;
     public static double INIT_ANGLE = 30;
     public static double K_GRAVITY = 0.022;
     public static double DRIVING_ANGLE = -5;
 
+    public ArmState armState = ArmState.INIT;
+    private final PID_Controller ArmPID = new PID_Controller(ARM_PID_COEFFS, 0);
+    private double ArmPower = 0;
+    private double targetAngle = INIT_ANGLE;
+
     public Slides slides;
+
     public TenacityArm(Slides slides, Gamepad gamepad1, Telemetry telemetry, HardwareMap hardwareMap) {
         super(2, names, 28, 0.0091, 0.1, 45, hardwareMap);
 
-        ArmPID = new PID_Controller(ARM_PID_COEFFICIENTS, 0);
-
         ArmPID.tolerance = 0.75;
-
-        targetAngle = 45;
-
-        armState = ArmState.INIT;
 
         this.gamepad1 = gamepad1;
         this.telemetry = telemetry;
@@ -82,14 +75,15 @@ public class TenacityArm extends MotorArm {
             case FAR_INTAKE:
                 targetAngle = FAR_INTAKE_ANGLE;
                 break;
+            case AUTON_INTAKE:
+                targetAngle = AUTON_INTAKE_ANGLE;
+                break;
             case FIRST_LINE:
                 targetAngle = 152;
                 break;
-
             case SECOND_LINE:
                 targetAngle = 133;
                 break;
-
             case THIRD_LINE:
                 targetAngle = 130;
                 break;
