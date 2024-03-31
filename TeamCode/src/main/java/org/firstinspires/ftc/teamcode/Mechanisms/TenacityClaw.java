@@ -25,7 +25,7 @@ public class TenacityClaw {
     public static double clawRightClosed = 0;
     public ClawState clawState;
     Gamepad gamepad1;
-    boolean lastToggleY = false;
+    boolean leftOpen = false, rightOpen = false;
     boolean lastToggleLeftBumper = false;
     boolean lastToggleRightBumper = false;
 
@@ -39,6 +39,7 @@ public class TenacityClaw {
     }
 
     public void setClawPosition(){
+        /*
         switch (clawState){
             case OPEN:
                 clawLeft.clawServo.setPosition(clawLeftOpen);
@@ -57,8 +58,13 @@ public class TenacityClaw {
                 clawLeft.clawServo.setPosition(clawLeftClosed);
                 break;
         }
+         */
+        clawLeft.clawServo.setPosition(leftOpen ? clawLeftOpen : clawLeftClosed);
+        clawRight.clawServo.setPosition(rightOpen ? clawRightOpen : clawRightClosed);
     }
+
     public void toggleClaw(){
+        /*
 //        clawLeft.setPosition();
 //        clawRight.setPosition();
         setClawPosition();
@@ -118,6 +124,21 @@ public class TenacityClaw {
         lastToggleY = gamepad1.y;
         lastToggleLeftBumper = gamepad1.left_bumper;
         lastToggleRightBumper = gamepad1.right_bumper;
+        */
+        if (gamepad1.left_bumper && !lastToggleLeftBumper) {
+            leftOpen = !leftOpen;
+            lastToggleLeftBumper = true;
+        } else if (!gamepad1.left_bumper && lastToggleLeftBumper){
+            lastToggleLeftBumper = false;
+        }
+
+        if (gamepad1.right_bumper && !lastToggleRightBumper) {
+            rightOpen = !rightOpen;
+            lastToggleRightBumper = true;
+        } else if (!gamepad1.right_bumper && lastToggleRightBumper){
+            lastToggleRightBumper = false;
+        }
+        setClawPosition();
     }
 
     public void toggleClawLeft(){
