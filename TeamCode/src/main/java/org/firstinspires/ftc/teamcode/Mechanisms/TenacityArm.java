@@ -43,7 +43,8 @@ public class TenacityArm extends MotorArm {
 
 
     public static PIDCoefficients ARM_PID_COEFFICIENTS = new PIDCoefficients(0.04, 0.0025, 0.003);
-    public static double ANGLE = -11;
+    public static double CLOSE_INTAKE_ANGLE = -12;
+    public static double FAR_INTAKE_ANGLE = -11;
     public static double INIT_ANGLE = 30;
     public static double K_GRAVITY = 0.022;
 
@@ -72,13 +73,13 @@ public class TenacityArm extends MotorArm {
                 targetAngle = INIT_ANGLE;
                 break;
             case CLOSE_INTAKE:
-                targetAngle = ANGLE;
+                targetAngle = CLOSE_INTAKE_ANGLE;
                 break;
             case DRIVING:
                 targetAngle = 0;
                 break;
             case FAR_INTAKE:
-                targetAngle = -12;
+                targetAngle = FAR_INTAKE_ANGLE;
                 break;
             case FIRST_LINE:
                 targetAngle = 152;
@@ -91,7 +92,9 @@ public class TenacityArm extends MotorArm {
             case THIRD_LINE:
                 targetAngle = 130;
                 break;
-
+            case HANG:
+                targetAngle = 105;
+                break;
             case MANUAL:
                 if (gamepad1.dpad_up){
                     ArmPower = -0.25;

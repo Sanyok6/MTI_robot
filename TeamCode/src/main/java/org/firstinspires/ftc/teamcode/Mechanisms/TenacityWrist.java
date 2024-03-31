@@ -17,7 +17,8 @@ public class TenacityWrist extends ArmWrist {
         INTAKE_POSITION,
         OUTTAKE_FIRST_LINE,
         OUTTAKE_SECOND_LINE,
-        OUTTAKE_THIRD_LINE
+        OUTTAKE_THIRD_LINE,
+        HANG
     }
 
     public static double WRIST_INTAKE = 0.52;
@@ -26,6 +27,7 @@ public class TenacityWrist extends ArmWrist {
     public static double WRIST_OUTTAKE_3 = 0.5;
     public static double WRIST_INIT = 0.87;
     public static double WRIST_DRIVING = 0.05;
+    public static double WRIST_HANG = 0.4;
 
     public WristPosition wristPosition;
 
@@ -53,6 +55,9 @@ public class TenacityWrist extends ArmWrist {
                 break;
             case OUTTAKE_THIRD_LINE:
                 wristServo.setPosition(WRIST_OUTTAKE_3);
+                break;
+            case HANG:
+                wristServo.setPosition(WRIST_HANG);
                 break;
         }
     }

@@ -30,7 +30,8 @@ public class TenacitySlides extends Slides {
         FIRST_LINE,
         SECOND_LINE,
         THIRD_LINE,
-        HANG,
+        HANG_ALIGN,
+        HANG_PULL,
         MANUAL
     }
 
@@ -101,7 +102,14 @@ public class TenacitySlides extends Slides {
                 targetPos = 1;
                 slidesPower = slidesPID.PID_Power(getExtension(), targetPos);
                 break;
-
+            case HANG_ALIGN:
+                targetPos = 5;
+                slidesPower = slidesPID.PID_Power(getExtension(), targetPos);
+                break;
+            case HANG_PULL:
+                targetPos = 1;
+                slidesPower = slidesPID.PID_Power(getExtension(), targetPos);
+                break;
             case MANUAL:
                 slidesPower = gamepad1.right_trigger - gamepad1.left_trigger;
                 break;

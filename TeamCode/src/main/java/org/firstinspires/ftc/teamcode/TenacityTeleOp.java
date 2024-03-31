@@ -38,6 +38,12 @@ public class TenacityTeleOp extends LinearOpMode {
         FAR
     }
 
+    enum HangStates{
+        ALIGN,
+        PULL
+    }
+
+    private HangStates hangState;
     private IntakeStates intakeStates;
     private TeleOpState teleOpState;
     private TeleOpState scoringState;
@@ -47,6 +53,7 @@ public class TenacityTeleOp extends LinearOpMode {
     private boolean lastToggleDown = false;
     private boolean lastToggleB = false;
     private boolean lastToggleA = false;
+    private boolean lastToggleOption = false;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -62,6 +69,8 @@ public class TenacityTeleOp extends LinearOpMode {
         teleOpState = TeleOpState.INTAKE;
         scoringState = TeleOpState.FIRST_LINE;
 
+        hangState = HangStates.ALIGN;
+
         intakeStates = IntakeStates.FAR;
 
         runtime.reset();
@@ -73,7 +82,7 @@ public class TenacityTeleOp extends LinearOpMode {
             if (runtime.seconds() > 3)
                 arm.setArmPower();
 
-            if (gamepad1.start)
+            if (gamepad1.touchpad)
                 slides.resetEncoders();
 
             telemetry.addLine("Waiting For Start");
@@ -115,10 +124,9 @@ public class TenacityTeleOp extends LinearOpMode {
                         teleOpState = scoringState;
                     }
 
-//                    if ((gamepad1.b != lastToggleB) && gamepad1.b){
-//                        teleOpState = TeleOpState.MANUAL;
-//                    }
-
+                    if ((gamepad1.options != lastToggleOption) && gamepad1.options){
+                        teleOpState = TeleOpState.HANG;
+                    }
                     if ((gamepad1.b != lastToggleB) && gamepad1.b) {
                         teleOpState = TeleOpState.DRIVING_ONE;
                     }
@@ -136,9 +144,9 @@ public class TenacityTeleOp extends LinearOpMode {
                         teleOpState = TeleOpState.INTAKE;
                     }
 
-//                    if ((gamepad1.b != lastToggleB) && gamepad1.b){
-//                        teleOpState = TeleOpState.MANUAL;
-//                    }
+                    if ((gamepad1.options != lastToggleOption) && gamepad1.options){
+                        teleOpState = TeleOpState.HANG;
+                    }
                     break;
                 case DRIVING_TWO:
                     arm.armState = TenacityArm.ArmState.DRIVING;
@@ -153,9 +161,9 @@ public class TenacityTeleOp extends LinearOpMode {
                         teleOpState = scoringState;
                     }
 
-//                    if ((gamepad1.b != lastToggleB) && gamepad1.b){
-//                        teleOpState = TeleOpState.MANUAL;
-//                    }
+                    if ((gamepad1.options != lastToggleOption) && gamepad1.options){
+                        teleOpState = TeleOpState.HANG;
+                    }
                     break;
                 case FIRST_LINE:
                     arm.armState = TenacityArm.ArmState.FIRST_LINE;
@@ -171,12 +179,12 @@ public class TenacityTeleOp extends LinearOpMode {
                         teleOpState = TeleOpState.SECOND_LINE;
                     }
 
-//                    if ((gamepad1.b != lastToggleB) && gamepad1.b){
-//                        teleOpState = TeleOpState.MANUAL;
-//                    }
-
                     if ((gamepad1.b != lastToggleB) && gamepad1.b) {
                         teleOpState = TeleOpState.DRIVING_TWO;
+                    }
+
+                    if ((gamepad1.options != lastToggleOption) && gamepad1.options){
+                        teleOpState = TeleOpState.HANG;
                     }
                     break;
                 case SECOND_LINE:
@@ -197,12 +205,12 @@ public class TenacityTeleOp extends LinearOpMode {
                         teleOpState = TeleOpState.FIRST_LINE;
                     }
 
-//                    if ((gamepad1.b != lastToggleB) && gamepad1.b){
-//                        teleOpState = TeleOpState.MANUAL;
-//                    }
-
                     if ((gamepad1.b != lastToggleB) && gamepad1.b) {
                         teleOpState = TeleOpState.DRIVING_TWO;
+                    }
+
+                    if ((gamepad1.options != lastToggleOption) && gamepad1.options){
+                        teleOpState = TeleOpState.HANG;
                     }
                     break;
                 case THIRD_LINE:
@@ -226,16 +234,46 @@ public class TenacityTeleOp extends LinearOpMode {
                     if ((gamepad1.b != lastToggleB) && gamepad1.b) {
                         teleOpState = TeleOpState.DRIVING_TWO;
                     }
+
+                    if ((gamepad1.options != lastToggleOption) && gamepad1.options){
+                        teleOpState = TeleOpState.HANG;
+                    }
                     break;
                 case HANG:
-                    // TODO: Figure out how the hang is gonna work
+                    switch (hangState){
+                        case ALIGN:
+                            arm.armState = TenacityArm.ArmState.HANG;
+                            slides.slidesState = TenacitySlides.SlidesState.HANG_ALIGN;
+                            wrist.wristPosition = TenacityWrist.WristPosition.HANG;
+
+                            if ((gamepad1.x != lastToggleX) && gamepad1.x){
+                                hangState = HangStates.PULL;
+                            }
+                            break;
+                        case PULL:
+                            arm.armState = TenacityArm.ArmState.HANG;
+                            slides.slidesState = TenacitySlides.SlidesState.HANG_PULL;
+                            wrist.wristPosition = TenacityWrist.WristPosition.HANG;
+
+                            if ((gamepad1.x != lastToggleX) && gamepad1.x){
+                                hangState = HangStates.ALIGN;
+                            }
+
+                            if ((gamepad1.options != lastToggleOption) && gamepad1.options){
+                                teleOpState = TeleOpState.INTAKE;
+                            }
+                            break;
+                    }
                     break;
                 case MANUAL:
                     slides.slidesState = TenacitySlides.SlidesState.MANUAL;
 
                     if ((gamepad1.x != lastToggleX) && gamepad1.x) {
-                        scoringState = teleOpState;
                         teleOpState = TeleOpState.INTAKE;
+                    }
+
+                    if ((gamepad1.options != lastToggleOption) && gamepad1.options){
+                        teleOpState = TeleOpState.HANG;
                     }
                     break;
             }
@@ -247,6 +285,7 @@ public class TenacityTeleOp extends LinearOpMode {
             lastToggleDown = gamepad1.dpad_down;
             lastToggleB = gamepad1.b;
             lastToggleA = gamepad1.a;
+            lastToggleOption = gamepad1.options;
 
             arm.TuningTelemetry();
 
