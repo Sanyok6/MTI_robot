@@ -1,9 +1,11 @@
-package org.firstinspires.ftc.teamcode.auto;
+package org.firstinspires.ftc.teamcode.Auto;
 
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.InstantFunction;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.ProfileAccelConstraint;
+import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -58,9 +60,20 @@ public class TenacityAuto extends LinearOpMode {
         };
 
         InstantFunction prepareToIntakeWhitePixel = () -> {
-            arm.armState = TenacityArm.ArmState.CLOSE_INTAKE;
+            arm.armState = TenacityArm.ArmState.AUTON_INTAKE;
             slides.slidesState = TenacitySlides.SlidesState.CLOSE_INTAKE;
             wrist.wristPosition = TenacityWrist.WristPosition.INTAKE_POSITION;
+        };
+
+        InstantFunction intakeWhitePixel = () -> {
+            doubleClaw.setClawLeftOpen(false);
+            doubleClaw.setClawRightOpen(false);
+            wrist.wristPosition = TenacityWrist.WristPosition.AUTON_INTAKE;
+        };
+
+        InstantFunction toDropExtraPixels = () -> {
+            arm.armState = TenacityArm.ArmState.AUTON_AFTER_INTAKE;
+            wrist.wristPosition = TenacityWrist.WristPosition.AUTON_AFTER_INTAKE;
         };
 
         Action traj = drive.actionBuilder(new Pose2d(12, 59, Math.toRadians(270)))
@@ -71,13 +84,26 @@ public class TenacityAuto extends LinearOpMode {
                 .waitSeconds(1)
                 .stopAndAdd(prepareToPlaceYellowPixel)
 
-                .strafeTo(new Vector2d(48, 34))
+                .strafeTo(new Vector2d(48, 32))
+                .waitSeconds(1)
                 .stopAndAdd(placeYellowPixel)
                 .waitSeconds(2)
+                .strafeTo(new Vector2d(46, 32))
+
 
                 .afterTime(1, prepareToIntakeWhitePixel)
-                .strafeTo(new Vector2d(35, 7))
-                .strafeTo(new Vector2d(-44, 7))
+                .strafeTo(new Vector2d(35, 4))
+                .strafeTo(new Vector2d(-52, 4))
+                .stopAndAdd(intakeWhitePixel)
+                .afterTime(0.5, toDropExtraPixels)
+                .strafeTo(new Vector2d(35, 4))
+
+                .stopAndAdd(prepareToPlaceYellowPixel)
+                .strafeTo(new Vector2d(50, 30))
+                .waitSeconds(1)
+                .stopAndAdd(placeYellowPixel)
+                .waitSeconds(2)
+                .strafeTo(new Vector2d(45, 30), new TranslationalVelConstraint(10))
 
                 // arm to drive mode
                 .build();
