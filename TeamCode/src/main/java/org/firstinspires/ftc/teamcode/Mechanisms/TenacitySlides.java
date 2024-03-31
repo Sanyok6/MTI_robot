@@ -36,7 +36,7 @@ public class TenacitySlides extends Slides {
     }
 
     public SlidesState slidesState = SlidesState.INIT;
-    public PID_Controller slidesPID;
+    private PID_Controller slidesPID = new PID_Controller(SLIDE_PID_COEFFS, 0);
 
     public MotorArm arm;
 
@@ -46,9 +46,7 @@ public class TenacitySlides extends Slides {
     public TenacitySlides(MotorArm arm, Gamepad gamepad1, Telemetry telemetry, HardwareMap hardwareMap) {
         super(2, name, pulleyRadius, StringingMethod.CASCADE, 2, SLIDE_KGRAVITY, hardwareMap); //0.175
 
-        slidesPID = new PID_Controller(SLIDE_PID_COEFFS, 0); //0.07, 0.0035, 0, 0.01
-
-        slidesPID.tolerance = 0.3;
+        slidesPID.tolerance = 0.001;
 
         this.arm = arm;
 
@@ -75,46 +73,35 @@ public class TenacitySlides extends Slides {
 
     // Method looped to continually set power to slides based on state
     public void setSlidePower() {
-        /* PID controller calculates the power needed to be set to the motors to stay at the target position  */
-        slidesPID.tolerance = 0.001;
-
         switch (slidesState) {
             case INIT:
                 targetPos = 1;
-                slidesPower = slidesPID.PID_Power(getExtension(), targetPos);
                 break;
             case FAR_INTAKE:
                 targetPos = 6;
-                slidesPower = slidesPID.PID_Power(getExtension(), targetPos);
                 break;
-
             case FIRST_LINE:
                 targetPos = 1;
-                slidesPower = slidesPID.PID_Power(getExtension(), targetPos);
                 break;
-
             case SECOND_LINE:
                 targetPos = 1;
-                slidesPower = slidesPID.PID_Power(getExtension(), targetPos);
                 break;
-
             case THIRD_LINE:
                 targetPos = 1;
-                slidesPower = slidesPID.PID_Power(getExtension(), targetPos);
                 break;
             case HANG_ALIGN:
                 targetPos = 5;
-                slidesPower = slidesPID.PID_Power(getExtension(), targetPos);
                 break;
             case HANG_PULL:
                 targetPos = 1;
-                slidesPower = slidesPID.PID_Power(getExtension(), targetPos);
                 break;
             case MANUAL:
                 slidesPower = gamepad1.right_trigger - gamepad1.left_trigger;
                 break;
         }
-        // Sets the power to the slides motors
+
+        if (slidesState != SlidesState.MANUAL)
+            slidesPower = slidesPID.PID_Power(getExtension(), targetPos);
         setPower(slidesPower);
     }
 
