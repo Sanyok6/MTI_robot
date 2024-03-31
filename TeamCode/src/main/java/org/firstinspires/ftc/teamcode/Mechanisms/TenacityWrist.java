@@ -16,6 +16,7 @@ public class TenacityWrist extends ArmWrist {
         INIT,
         INTAKE_POSITION,
         AUTON_INTAKE,
+        AUTON_AFTER_INTAKE,
         OUTTAKE_FIRST_LINE,
         OUTTAKE_SECOND_LINE,
         OUTTAKE_THIRD_LINE,
@@ -24,6 +25,7 @@ public class TenacityWrist extends ArmWrist {
 
     public static double WRIST_INTAKE = 0.52;
     public static double WRIST_AUTON_INTAKE = 0.565;
+    public static double WRIST_AUTON_AFTER_INTAKE = 0.3;
     public static double WRIST_OUTTAKE_1 = 0.45;
     public static double WRIST_OUTTAKE_2 = 0.5;
     public static double WRIST_OUTTAKE_3 = 0.5;
@@ -47,6 +49,9 @@ public class TenacityWrist extends ArmWrist {
                 break;
             case AUTON_INTAKE:
                 wristServo.setPosition(WRIST_AUTON_INTAKE);
+                break;
+            case AUTON_AFTER_INTAKE:
+                wristServo.setPosition(WRIST_AUTON_AFTER_INTAKE);
                 break;
             case INIT:
                 wristServo.setPosition(WRIST_INIT);
