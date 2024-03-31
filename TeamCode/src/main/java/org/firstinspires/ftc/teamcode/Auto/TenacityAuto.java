@@ -57,21 +57,28 @@ public class TenacityAuto extends LinearOpMode {
             doubleClaw.setClawRightOpen(true);
         };
 
+        InstantFunction prepareToIntakeWhitePixel = () -> {
+            arm.armState = TenacityArm.ArmState.CLOSE_INTAKE;
+            slides.slidesState = TenacitySlides.SlidesState.CLOSE_INTAKE;
+            wrist.wristPosition = TenacityWrist.WristPosition.INTAKE_POSITION;
+        };
+
         Action traj = drive.actionBuilder(new Pose2d(12, 59, Math.toRadians(270)))
-                .strafeToLinearHeading(new Vector2d(42, 22), Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(43, 22), Math.toRadians(180))
                 .stopAndAdd(prepareToPlacePurplePixel)
                 .waitSeconds(2)
                 .stopAndAdd(placePurplePixel)
                 .waitSeconds(1)
                 .stopAndAdd(prepareToPlaceYellowPixel)
-                // purple pixel
 
                 .strafeTo(new Vector2d(48, 34))
-                // prepare to outtake yellow
-                .waitSeconds(0.25)
                 .stopAndAdd(placeYellowPixel)
                 .waitSeconds(2)
-                // outtake yellow
+
+                .afterTime(1, prepareToIntakeWhitePixel)
+                .strafeTo(new Vector2d(35, 7))
+                .strafeTo(new Vector2d(-44, 7))
+
                 // arm to drive mode
                 .build();
 
