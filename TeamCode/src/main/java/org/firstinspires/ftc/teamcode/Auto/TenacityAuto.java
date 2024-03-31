@@ -58,7 +58,7 @@ public class TenacityAuto extends LinearOpMode {
         };
 
         Action traj = drive.actionBuilder(new Pose2d(12, 59, Math.toRadians(270)))
-                .strafeToLinearHeading(new Vector2d(42, 18), Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(42, 22), Math.toRadians(180))
                 .stopAndAdd(prepareToPlacePurplePixel)
                 .waitSeconds(2)
                 .stopAndAdd(placePurplePixel)
@@ -66,10 +66,11 @@ public class TenacityAuto extends LinearOpMode {
                 .stopAndAdd(prepareToPlaceYellowPixel)
                 // purple pixel
 
-                .strafeTo(new Vector2d(46, 34))
+                .strafeTo(new Vector2d(48, 34))
                 // prepare to outtake yellow
                 .waitSeconds(0.25)
                 .stopAndAdd(placeYellowPixel)
+                .waitSeconds(2)
                 // outtake yellow
                 // arm to drive mode
                 .build();
