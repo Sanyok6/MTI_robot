@@ -29,12 +29,12 @@ public class TenacityWrist extends ArmWrist {
     public static double WRIST_INTAKE = 0.53;
     public static double WRIST_AUTON_INTAKE = 0.565;
     public static double WRIST_AUTON_AFTER_INTAKE = 0.3;
-    public static double WRIST_OUTTAKE_HALF1 = 0.42;
+    public static double WRIST_OUTTAKE_HALF1 = 0.45;
     public static double WRIST_OUTTAKE_1 = 0.45;
-    public static double WRIST_OUTTAKE_HALF3 = 0.45;
+    public static double WRIST_OUTTAKE_HALF3 = 0.5;
     public static double WRIST_OUTTAKE_2 = 0.5;
-    public static double WRIST_OUTTAKE_HALF5 = 0.5;
-    public static double WRIST_OUTTAKE_3 = 0.5;
+    public static double WRIST_OUTTAKE_HALF5 = 0.55;
+    public static double WRIST_OUTTAKE_3 = 0.55;
     public static double WRIST_INIT = 0.87;
     public static double WRIST_DRIVING = 0.05;
     public static double WRIST_HANG = 0.4;
