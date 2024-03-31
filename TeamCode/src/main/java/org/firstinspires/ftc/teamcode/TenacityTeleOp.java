@@ -25,7 +25,6 @@ public class TenacityTeleOp extends LinearOpMode {
     private enum TeleOpState {
         INTAKE,
         DRIVING,
-        DRIVING_TWO,
         FIRST_HALF,
         FIRST_LINE,
         THIRD_HALF,
@@ -69,8 +68,8 @@ public class TenacityTeleOp extends LinearOpMode {
         slides.arm = arm;
         arm.slides = slides;
 
-        teleOpState = TeleOpState.INTAKE;
-        scoringState = TeleOpState.FIRST_LINE;
+        teleOpState = TeleOpState.DRIVING;
+        scoringState = TeleOpState.FIRST_HALF;
 
         hangState = HangStates.ALIGN;
 
@@ -151,7 +150,7 @@ public class TenacityTeleOp extends LinearOpMode {
                 case FIRST_HALF:
                     arm.armState = TenacityArm.ArmState.FIRST_HALF;
                     slides.slidesState = TenacitySlides.SlidesState.FIRST_HALF;
-                    wrist.wristPosition = TenacityWrist.WristPosition.OUTTAKE_FIRST_LINE;
+                    wrist.wristPosition = TenacityWrist.WristPosition.OUTTAKE_FIRST_HALF;
 
                     if ((gamepad1.dpad_up != lastToggleUp) && gamepad1.dpad_up) {
                         teleOpState = TeleOpState.FIRST_LINE;
@@ -172,7 +171,7 @@ public class TenacityTeleOp extends LinearOpMode {
                     wrist.wristPosition = TenacityWrist.WristPosition.OUTTAKE_FIRST_LINE;
 
                     if ((gamepad1.dpad_up != lastToggleUp) && gamepad1.dpad_up) {
-                        teleOpState = TeleOpState.SECOND_LINE;
+                        teleOpState = TeleOpState.THIRD_HALF;
                     }
 
                     if ((gamepad1.b != lastToggleB) && gamepad1.b) {
@@ -191,7 +190,7 @@ public class TenacityTeleOp extends LinearOpMode {
                 case THIRD_HALF:
                     arm.armState = TenacityArm.ArmState.THIRD_HALF;
                     slides.slidesState = TenacitySlides.SlidesState.THIRD_HALF;
-                    wrist.wristPosition = TenacityWrist.WristPosition.OUTTAKE_SECOND_LINE;
+                    wrist.wristPosition = TenacityWrist.WristPosition.OUTTAKE_THIRD_HALF;
 
                     if ((gamepad1.dpad_up != lastToggleUp) && gamepad1.dpad_up) {
                         teleOpState = TeleOpState.SECOND_LINE;
@@ -216,11 +215,11 @@ public class TenacityTeleOp extends LinearOpMode {
                     wrist.wristPosition = TenacityWrist.WristPosition.OUTTAKE_SECOND_LINE;
 
                     if ((gamepad1.dpad_up != lastToggleUp) && gamepad1.dpad_up) {
-                        teleOpState = TeleOpState.THIRD_LINE;
+                        teleOpState = TeleOpState.FIFTH_HALF;
                     }
 
                     if ((gamepad1.dpad_down != lastToggleDown) && gamepad1.dpad_down) {
-                        teleOpState = TeleOpState.FIRST_LINE;
+                        teleOpState = TeleOpState.THIRD_HALF;
                     }
 
                     if ((gamepad1.b != lastToggleB) && gamepad1.b) {
@@ -233,6 +232,10 @@ public class TenacityTeleOp extends LinearOpMode {
                     }
                     break;
                 case FIFTH_HALF:
+                    arm.armState = TenacityArm.ArmState.FIFTH_HALF;
+                    slides.slidesState = TenacitySlides.SlidesState.FIFTH_HALF;
+                    wrist.wristPosition = TenacityWrist.WristPosition.OUTTAKE_FIFTH_HALF;
+
                     if ((gamepad1.dpad_up != lastToggleUp) && gamepad1.dpad_up) {
                         teleOpState = TeleOpState.THIRD_LINE;
                     }
@@ -316,9 +319,9 @@ public class TenacityTeleOp extends LinearOpMode {
             lastToggleA = gamepad1.a;
             lastToggleOption = gamepad1.options;
 
+            telemetry.addData("Arm State", arm.armState);
             arm.TuningTelemetry();
 
-            telemetry.addData("Wrist Position", wrist.wristPosition);
             telemetry.update();
         }
     }

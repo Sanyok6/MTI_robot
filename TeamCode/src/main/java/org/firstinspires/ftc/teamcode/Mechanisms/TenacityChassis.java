@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode.Mechanisms;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
 import org.firstinspires.ftc.robotcontroller.Hardware.Motor;
@@ -12,6 +14,7 @@ import org.firstinspires.ftc.robotcontroller.Math.Vectors.Vector3D;
 import java.util.Arrays;
 import java.util.List;
 
+@Config
 public class TenacityChassis {
     Gamepad gamepad1;
 
@@ -30,6 +33,10 @@ public class TenacityChassis {
 
     private List<Motor> motors;
     public double max;
+
+    private IMU imu;
+
+    public static double TURN_SPEED = 0.5;
 
     public TenacityChassis(Gamepad gamepad1, HardwareMap hardwareMap) {
         frontLeft = new Motor("fLeft", hardwareMap);
@@ -61,10 +68,10 @@ public class TenacityChassis {
     }
 
     public void setDriveVectorsRobotCentric(Vector3D input){
-        fLeft = input.A -   input.B +   input.C;
-        fRight = input.A +   input.B -   input.C;
-        bRight = input.A -   input.B -   input.C;
-        bLeft = input.A +   input.B +   input.C;
+        fLeft = input.A -   input.B +   TURN_SPEED*input.C;
+        fRight = input.A +   input.B -   TURN_SPEED*input.C;
+        bRight = input.A -   input.B -   TURN_SPEED*input.C;
+        bLeft = input.A +   input.B +   TURN_SPEED*input.C;
 
         max = Math.max(Math.max(Math.abs(fLeft), Math.abs(fRight)), Math.max(Math.abs(bLeft), Math.abs(bRight)));
         if (max > 1.0) {

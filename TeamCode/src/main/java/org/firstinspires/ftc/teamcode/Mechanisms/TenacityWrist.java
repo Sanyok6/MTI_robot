@@ -17,17 +17,23 @@ public class TenacityWrist extends ArmWrist {
         INTAKE_POSITION,
         AUTON_INTAKE,
         AUTON_AFTER_INTAKE,
+        OUTTAKE_FIRST_HALF,
         OUTTAKE_FIRST_LINE,
+        OUTTAKE_THIRD_HALF,
         OUTTAKE_SECOND_LINE,
+        OUTTAKE_FIFTH_HALF,
         OUTTAKE_THIRD_LINE,
         HANG
     }
 
-    public static double WRIST_INTAKE = 0.52;
+    public static double WRIST_INTAKE = 0.53;
     public static double WRIST_AUTON_INTAKE = 0.565;
     public static double WRIST_AUTON_AFTER_INTAKE = 0.3;
+    public static double WRIST_OUTTAKE_HALF1 = 0.42;
     public static double WRIST_OUTTAKE_1 = 0.45;
+    public static double WRIST_OUTTAKE_HALF3 = 0.45;
     public static double WRIST_OUTTAKE_2 = 0.5;
+    public static double WRIST_OUTTAKE_HALF5 = 0.5;
     public static double WRIST_OUTTAKE_3 = 0.5;
     public static double WRIST_INIT = 0.87;
     public static double WRIST_DRIVING = 0.05;
@@ -56,11 +62,20 @@ public class TenacityWrist extends ArmWrist {
             case INIT:
                 wristServo.setPosition(WRIST_INIT);
                 break;
+            case OUTTAKE_FIRST_HALF:
+                wristServo.setPosition(WRIST_OUTTAKE_HALF1);
+                break;
             case OUTTAKE_FIRST_LINE:
                 wristServo.setPosition(WRIST_OUTTAKE_1);
                 break;
+            case OUTTAKE_THIRD_HALF:
+                wristServo.setPosition(WRIST_OUTTAKE_HALF3);
+                break;
             case OUTTAKE_SECOND_LINE:
                 wristServo.setPosition(WRIST_OUTTAKE_2);
+                break;
+            case OUTTAKE_FIFTH_HALF:
+                wristServo.setPosition(WRIST_OUTTAKE_HALF5);
                 break;
             case OUTTAKE_THIRD_LINE:
                 wristServo.setPosition(WRIST_OUTTAKE_3);

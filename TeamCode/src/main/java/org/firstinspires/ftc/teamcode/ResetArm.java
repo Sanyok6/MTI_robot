@@ -24,12 +24,8 @@ public class ResetArm extends LinearOpMode {
 
         waitForStart();
 
-        while (opModeIsActive()) {
-            if (gamepad1.a) {
-                slides.resetEncoders();
-                telemetry.addLine("Encoder reset");
-                telemetry.update();
-            }
-        }
+        slides.resetEncoders();
+        telemetry.addLine("Encoder reset");
+        telemetry.update();
     }
 }

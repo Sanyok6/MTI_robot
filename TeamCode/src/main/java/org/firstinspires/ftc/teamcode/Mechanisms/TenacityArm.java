@@ -28,16 +28,27 @@ public class TenacityArm extends MotorArm {
         AUTON_INTAKE,
         AUTON_AFTER_INTAKE,
         DRIVING,
+        FIRST_HALF,
         FIRST_LINE,
+        THIRD_HALF,
         SECOND_LINE,
+        FIFTH_HALF,
         THIRD_LINE,
         HANG,
         MANUAL
     }
 
-    public static PIDCoefficients ARM_PID_COEFFS = new PIDCoefficients(0.04, 0.0025, 0.003);
+    public static double FIRST_HALF_POS = 160;
+    public static double FIRST_LINE_POS = 152;
+    public static double THIRD_HALF_POS = 140;
+    public static double SECOND_LINE_POS = 135;
+    public static double FIFTH_HALF_POS = 130;
+    public static double THIRD_LINE_POS = 130;
+    public static double HANG_ANGLE = 70;
+
+    public static PIDCoefficients ARM_PID_COEFFS = new PIDCoefficients(0.05, 0.0025, 0.003);
     public static double CLOSE_INTAKE_ANGLE = -12;
-    public static double FAR_INTAKE_ANGLE = -11;
+    public static double FAR_INTAKE_ANGLE = -14;
     public static double AUTON_INTAKE_ANGLE = -14;
     public static double AUTON_AFTER_INTAKE_ANGLE = 10;
     public static double INIT_ANGLE = 30;
@@ -83,17 +94,26 @@ public class TenacityArm extends MotorArm {
             case AUTON_AFTER_INTAKE:
                 targetAngle = AUTON_AFTER_INTAKE_ANGLE;
                 break;
+            case FIRST_HALF:
+                targetAngle = FIRST_HALF_POS;
+                break;
             case FIRST_LINE:
-                targetAngle = 152;
+                targetAngle = FIRST_LINE_POS;
+                break;
+            case THIRD_HALF:
+                targetAngle = THIRD_HALF_POS;
                 break;
             case SECOND_LINE:
-                targetAngle = 133;
+                targetAngle = SECOND_LINE_POS;
+                break;
+            case FIFTH_HALF:
+                targetAngle = FIFTH_HALF_POS;
                 break;
             case THIRD_LINE:
-                targetAngle = 130;
+                targetAngle = THIRD_LINE_POS;
                 break;
             case HANG:
-                targetAngle = 105;
+                targetAngle = HANG_ANGLE;
                 break;
             case MANUAL:
                 if (gamepad1.dpad_up){
