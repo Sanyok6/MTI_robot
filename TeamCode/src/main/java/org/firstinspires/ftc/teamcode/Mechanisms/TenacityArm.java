@@ -27,8 +27,11 @@ public class TenacityArm extends MotorArm {
         FAR_INTAKE,
         AUTON_INTAKE,
         DRIVING,
+        FIRST_HALF,
         FIRST_LINE,
+        THIRD_HALF,
         SECOND_LINE,
+        FIFTH_HALF,
         THIRD_LINE,
         HANG,
         MANUAL
@@ -46,6 +49,13 @@ public class TenacityArm extends MotorArm {
     private final PID_Controller ArmPID = new PID_Controller(ARM_PID_COEFFS, 0);
     private double ArmPower = 0;
     private double targetAngle = INIT_ANGLE;
+
+    public static double FIRST_HALF = 1;
+    public static double FIRST_LINE = 1.1;
+    public static double THIRD_HALF = 2.2;
+    public static double SECOND_LINE = 3.3;
+    public static double FIFTH_HALF = 4.4;
+    public static double THIRD_LINE = 5.5;
 
     public Slides slides;
 
@@ -78,14 +88,23 @@ public class TenacityArm extends MotorArm {
             case AUTON_INTAKE:
                 targetAngle = AUTON_INTAKE_ANGLE;
                 break;
+            case FIRST_HALF:
+                targetAngle = FIRST_HALF;
+                break;
             case FIRST_LINE:
-                targetAngle = 152;
+                targetAngle = FIRST_LINE;
+                break;
+            case THIRD_HALF:
+                targetAngle = THIRD_HALF;
                 break;
             case SECOND_LINE:
-                targetAngle = 133;
+                targetAngle = SECOND_LINE;
+                break;
+            case FIFTH_HALF:
+                targetAngle = FIFTH_HALF;
                 break;
             case THIRD_LINE:
-                targetAngle = 130;
+                targetAngle = THIRD_LINE;
                 break;
             case HANG:
                 targetAngle = 105;
