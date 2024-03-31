@@ -50,7 +50,7 @@ public class TenacityTeleOp extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         slides = new TenacitySlides(arm, gamepad1, telemetry, hardwareMap);
         arm = new TenacityArm(slides, gamepad1, telemetry, hardwareMap);
-        doubleClaw = new TenacityClaw(gamepad1, telemetry, hardwareMap);
+        doubleClaw = new TenacityClaw(gamepad1, hardwareMap);
         wrist = new TenacityWrist(gamepad1, telemetry, hardwareMap);
         chassis = new TenacityChassis(gamepad1, hardwareMap);
 
@@ -66,7 +66,6 @@ public class TenacityTeleOp extends LinearOpMode {
 
         while (opModeInInit()){
             slides.setSlidePower();
-            doubleClaw.setClawOpen();
             wrist.setWristPosition();
 
             if (runtime.seconds() > 3){
@@ -83,7 +82,7 @@ public class TenacityTeleOp extends LinearOpMode {
             arm.setArmPower();
             slides.setSlidePower();
 
-            doubleClaw.toggleClaw();
+            doubleClaw.updateClaw();
 
             wrist.setWristPosition();
             switch (teleOpState){

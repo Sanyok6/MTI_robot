@@ -10,7 +10,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcontroller.Hardware.Intakes.ServoClaw;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Mechanisms.TenacityArm;
 import org.firstinspires.ftc.teamcode.Mechanisms.TenacityClaw;
@@ -25,12 +24,13 @@ public class TenacityAuto extends LinearOpMode {
     TenacityClaw doubleClaw;
 
     ElapsedTime runtime = new ElapsedTime();
+
     @Override
     public void runOpMode() throws InterruptedException {
-        arm = new TenacityArm(slides,gamepad1, telemetry, hardwareMap);
+        arm = new TenacityArm(slides, gamepad1, telemetry, hardwareMap);
         slides = new TenacitySlides(arm, gamepad1, telemetry, hardwareMap);
         wrist = new TenacityWrist(gamepad1, telemetry, hardwareMap);
-        doubleClaw = new TenacityClaw(gamepad1, telemetry, hardwareMap);
+        doubleClaw = new TenacityClaw(gamepad1, hardwareMap);
 
         arm.slides = slides;
         slides.arm = arm;
@@ -44,7 +44,7 @@ public class TenacityAuto extends LinearOpMode {
         };
 
         InstantFunction placePurplePixel = () -> {
-            doubleClaw.clawState = TenacityClaw.ClawState.LEFT_OPEN;
+            doubleClaw.setClawLeftOpen(true);
         };
 
         InstantFunction prepareToPlaceYellowPixel = () -> {
@@ -54,7 +54,7 @@ public class TenacityAuto extends LinearOpMode {
         };
 
         InstantFunction placeYellowPixel = () -> {
-            doubleClaw.clawState = TenacityClaw.ClawState.RIGHT_OPEN;
+            doubleClaw.setClawRightOpen(true);
         };
 
         Action traj = drive.actionBuilder(new Pose2d(12, 59, Math.toRadians(270)))
@@ -76,12 +76,10 @@ public class TenacityAuto extends LinearOpMode {
                 .build();
 
 
-
         Action updateArm = (t) -> {
             slides.setSlidePower();
             arm.setArmPower();
             wrist.setWristPosition();
-            doubleClaw.setClawPosition();
             return true;
         };
 
@@ -89,11 +87,10 @@ public class TenacityAuto extends LinearOpMode {
 
         while (!isStarted()) {
             slides.setSlidePower();
-            doubleClaw.setClawClosed();
+            doubleClaw.updateClaw();
             wrist.setWristPosition();
-            doubleClaw.clawState = TenacityClaw.ClawState.CLOSED;
 
-            if (runtime.seconds() > 3){
+            if (runtime.seconds() > 3) {
                 arm.setArmPower();
             }
 
@@ -109,6 +106,4 @@ public class TenacityAuto extends LinearOpMode {
                 )
         );
     }
-
-
 }
