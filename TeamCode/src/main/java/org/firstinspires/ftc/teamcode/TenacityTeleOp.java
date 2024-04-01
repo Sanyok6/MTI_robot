@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.Mechanisms.PlaneLauncher;
 import org.firstinspires.ftc.teamcode.Mechanisms.TenacityArm;
 import org.firstinspires.ftc.teamcode.Mechanisms.TenacityChassis;
 import org.firstinspires.ftc.teamcode.Mechanisms.TenacityClaw;
@@ -19,6 +20,7 @@ public class TenacityTeleOp extends LinearOpMode {
     private TenacityClaw doubleClaw;
     private TenacityWrist wrist;
     private TenacityChassis chassis;
+    private PlaneLauncher launcher;
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -64,6 +66,7 @@ public class TenacityTeleOp extends LinearOpMode {
         doubleClaw = new TenacityClaw(gamepad1, hardwareMap);
         wrist = new TenacityWrist(gamepad1, telemetry, hardwareMap);
         chassis = new TenacityChassis(gamepad1, hardwareMap);
+        launcher = new PlaneLauncher(hardwareMap);
 
         slides.arm = arm;
         arm.slides = slides;
@@ -94,9 +97,15 @@ public class TenacityTeleOp extends LinearOpMode {
             arm.setArmPower();
             slides.setSlidePower();
 
+            launcher.setLauncher();
+
             doubleClaw.updateClaw();
 
             wrist.setWristPosition();
+
+            if (gamepad1.back){
+                launcher.launcherState = PlaneLauncher.LauncherState.LAUNCHED;
+            }
 
             switch (teleOpState) {
                 case INTAKE:

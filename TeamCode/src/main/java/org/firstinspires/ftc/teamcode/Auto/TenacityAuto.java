@@ -52,7 +52,7 @@ public class TenacityAuto extends LinearOpMode {
         InstantFunction prepareToPlaceYellowPixel = () -> {
             arm.armState = TenacityArm.ArmState.FIRST_LINE;
             slides.slidesState = TenacitySlides.SlidesState.FIRST_LINE;
-            wrist.wristPosition = TenacityWrist.WristPosition.OUTTAKE_FIRST_LINE;
+            wrist.wristPosition = TenacityWrist.WristPosition.OUTTAKE_FIRST_HALF;
         };
 
         InstantFunction placeYellowPixel = () -> {
